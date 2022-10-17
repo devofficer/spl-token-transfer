@@ -2,15 +2,14 @@ import Head from "next/head";
 import { Global } from "@emotion/react";
 import xw from "xwind";
 import NavBar from "../components/navbar/NavBar";
-import { store } from "../store";
-import { Provider } from "react-redux";
+import WalletContext from "../components/connect/WalletContext";
 import "./custom.css";
 
 function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>VTVL Frontend</title>
+        <title>Tranfer spl-token</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -26,10 +25,10 @@ function App({ Component, pageProps }) {
         //tailwind base styles + keyframes + ring and shadow classes variables  ... to global styles
         styles={xw`XWIND_BASE XWIND_GLOBAL`}
       />
-      <Provider store={store}>
+      <WalletContext>
         <NavBar />
         <Component {...pageProps} />
-      </Provider>
+      </WalletContext>
     </>
   );
 }

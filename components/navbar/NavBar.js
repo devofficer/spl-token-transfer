@@ -3,7 +3,7 @@ import xw, { cx } from "xwind";
 
 import Logo from "./Logo";
 import Toolkit from "./toolkit/Toolkit";
-
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 //"react native style"
 const styles = {
   navbar: xw`
@@ -21,7 +21,8 @@ const NavBar = ({ className, children, ...props }) => {
     <>
       <nav css={styles.navbar}>
         <Logo />
-        <Toolkit />
+        {/* <Toolkit /> */}
+        <WalletMultiButton />
       </nav>
     </>
   );

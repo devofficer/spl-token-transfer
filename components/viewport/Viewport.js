@@ -14,7 +14,7 @@ const styles = {
 const Viewport = ({ className, children, ...props }) => {
   return (
     <div css={styles.viewport}>
-      <ConnectWallet />
+      {/* <ConnectWallet /> */}
       <TokenTransfer />
     </div>
   );

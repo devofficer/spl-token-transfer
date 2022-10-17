@@ -5,6 +5,11 @@ import MetaMask from "../connect/wallet/MetaMask";
 import WalletConnect from "../connect/wallet/WalletConnect";
 import ReceiveToken from "./ReceiveToken";
 import SendToken from "./SendToken";
+import {
+  useConnection,
+  useWallet,
+  useAnchorWallet,
+} from "@solana/wallet-adapter-react";
 //"react native style"
 const styles = {
   connectWallet: xw`
@@ -42,6 +47,9 @@ const styles = {
 };
 
 const TokenTransfer = ({ className, children, ...props }) => {
+  const wallet = useAnchorWallet();
+  const { connection } = useConnection();
+
   return (
     <div css={styles.connectWallet}>
       <h2 css={styles.title}>Transfer new spl-token</h2>
