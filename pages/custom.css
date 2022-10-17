@@ -1,0 +1,22 @@
+.slider-control-bottomcenter button {
+  background: white !important;
+  border-radius: 50%;
+  bottom: -45px;
+  width: 8px !important;
+  height: 8px !important;
+}
+
+.slider-control-bottomcenter li.active button {
+  background: #f9623b !important;
+  border-radius: 4px;
+  bottom: -45px;
+  width: 20px !important;
+  height: 8px !important;
+}
+
+.slider-control-bottomcenter svg {
+  display: none !important;
+}
+.slider-control-bottomcenter li {
+  margin-right: 5px;
+}
