@@ -1,5 +1,4 @@
-/* Example with @emotion/react */
-import xw, { cx } from "xwind";
+import xw from "xwind";
 
 import Logo from "./Logo";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";

@@ -25,17 +25,6 @@ const styles = {
     flex items-center
     my-10
   `,
-  linkWrapper: xw`
-    flex items-center justify-between space-x-20
-    border-t-2 border-b-2
-    py-4 text-xs
-  `,
-  link: xw`
-    text-legal-blue-100 font-bold
-  `,
-  suggestWrapper: xw`
-    flex items-center justify-between space-x-1
-  `,
   termsWrapper: xw`
     text-xs text-center
   `,

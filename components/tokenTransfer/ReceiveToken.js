@@ -1,13 +1,12 @@
 import { clusterApiUrl, Connection, PublicKey, Keypair } from "@solana/web3.js";
 import { getOrCreateAssociatedTokenAccount, transfer } from "@solana/spl-token";
 import { useWallet } from "@solana/wallet-adapter-react";
-import xw, { cx } from "xwind";
+import xw from "xwind";
 import {
   SECRET_KEY,
   TOKEN_IDENTIFIER,
   TOKEN_ACCOUNT_ADDRESS,
 } from "../../utils/walletConfig";
-import toast from "react-hot-toast";
 
 //"react native style"
 const styles = {

@@ -11,7 +11,7 @@ import {
   TOKEN_PROGRAM_ID,
   createTransferInstruction,
 } from "@solana/spl-token";
-import xw, { cx } from "xwind";
+import xw from "xwind";
 import {
   TOKEN_IDENTIFIER,
   TOKEN_ACCOUNT_ADDRESS,
@@ -63,17 +63,15 @@ const SendToken = ({ setLoading, toast }) => {
     try {
       setLoading(true);
       const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
-      // const fromWallet = Keypair.fromSecretKey(Uint8Array.from(SECRET_KEY));
       const mint = new PublicKey(TOKEN_IDENTIFIER);
       const tokenPublicKey = new PublicKey(TOKEN_ACCOUNT_ADDRESS);
       const toPublicKey = new PublicKey(toAddress);
-      // Get the token account of the toPublicKey address, and if it does not exist, create it
       const fromTokenAccount = await getOrCreateAssociatedTokenAccount(
         connection,
         fromPublicKey,
         mint,
         fromPublicKey,
-        signTransaction // Don't pass that if you have the private key as a string
+        signTransaction
       );
 
       const toTokenAccount = await getOrCreateAssociatedTokenAccount(
@@ -81,35 +79,27 @@ const SendToken = ({ setLoading, toast }) => {
         fromPublicKey,
         mint,
         toPublicKey,
-        signTransaction // Don't pass that if you have the private key as a string
+        signTransaction
       );
 
       const transaction = new Transaction().add(
         createTransferInstruction(
-          // imported from '@solana/spl-token'
           fromTokenAccount.address,
           toTokenAccount.address,
           fromPublicKey,
-          parseInt(tokenAmount * Math.pow(10, 6)), // tokens have 6 decimals of precision so your amount needs to have the same
+          parseInt(tokenAmount * Math.pow(10, 6)),
           [],
-          TOKEN_PROGRAM_ID // imported from '@solana/spl-token'
+          TOKEN_PROGRAM_ID
         )
       );
 
-      // set a recent block hash on the transaction to make it pass smoothly
       const latestBlockHash = await connection.getLatestBlockhash();
       transaction.recentBlockhash = latestBlockHash.blockhash;
 
-      // set who is the fee payer for that transaction
       transaction.feePayer = fromPublicKey;
-
-      // sign the transaction using the signTransaction method that we got from the useWallet hook above
       const signed = await signTransaction(transaction);
 
-      // send the signed transaction
       const signature = await connection.sendRawTransaction(signed.serialize());
-
-      // wait for a confirmation to make sure it went to the blockchain (optional)
       await connection.confirmTransaction({
         signature,
         lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
