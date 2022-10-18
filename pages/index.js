@@ -1,5 +1,5 @@
 import xw from "xwind";
-import Viewport from "../components/viewport/ViewPort";
+import ViewPort from "../components/viewport/Viewport";
 
 //"react native style"
 const styles = {
@@ -13,7 +13,7 @@ const styles = {
 
 const Index = () => (
   <div css={styles.index}>
-    <Viewport />
+    <ViewPort />
   </div>
 );
 
