@@ -1,5 +1,6 @@
 /* Example with @emotion/react */
-import xw, { cx } from "xwind";
+import { useWallet } from "@solana/wallet-adapter-react";
+import xw from "xwind";
 import TokenTransfer from "../tokenTransfer/TokenTransfer";
 import ConnectWallet from "../connect/ConnectWallet";
 //"react native style"
@@ -11,11 +12,11 @@ const styles = {
   `,
 };
 
-const Viewport = ({ className, children, ...props }) => {
+const Viewport = () => {
+  const { publicKey } = useWallet();
   return (
     <div css={styles.viewport}>
-      {/* <ConnectWallet /> */}
-      <TokenTransfer />
+      {publicKey ? <TokenTransfer /> : <ConnectWallet />}
     </div>
   );
 };

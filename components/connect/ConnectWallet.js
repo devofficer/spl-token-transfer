@@ -1,9 +1,6 @@
-/* Example with @emotion/react */
 import Link from "next/link";
-import xw, { cx } from "xwind";
-import MetaMask from "./wallet/MetaMask";
-import WalletConnect from "./wallet/WalletConnect";
-
+import xw from "xwind";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 //"react native style"
 const styles = {
   connectWallet: xw`
@@ -48,8 +45,7 @@ const ConnectWallet = ({ className, children, ...props }) => {
         Please select a wallet to connect to this app
       </p>
       <div css={styles.buttonWrapper}>
-        <MetaMask />
-        <WalletConnect />
+        <WalletMultiButton />
       </div>
       <div css={styles.linkWrapper}>
         <Link href="/">

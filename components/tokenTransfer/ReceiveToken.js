@@ -1,12 +1,13 @@
 import { clusterApiUrl, Connection, PublicKey, Keypair } from "@solana/web3.js";
 import { getOrCreateAssociatedTokenAccount, transfer } from "@solana/spl-token";
-
+import { useWallet } from "@solana/wallet-adapter-react";
 import xw, { cx } from "xwind";
 import {
   SECRET_KEY,
   TOKEN_IDENTIFIER,
   TOKEN_ACCOUNT_ADDRESS,
 } from "../../utils/walletConfig";
+import toast from "react-hot-toast";
 
 //"react native style"
 const styles = {
@@ -26,33 +27,34 @@ const styles = {
     `,
 };
 
-const ReceiveToken = () => {
+const ReceiveToken = ({ setLoading, toast }) => {
+  const { publicKey: toPublicKey } = useWallet();
   async function receiveFreeToken() {
+    setLoading(true);
     const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
     const fromWallet = Keypair.fromSecretKey(Uint8Array.from(SECRET_KEY));
     const mint = new PublicKey(TOKEN_IDENTIFIER);
-    const fromTokenAccountAddress = new PublicKey(TOKEN_ACCOUNT_ADDRESS);
-    const toWallet = new PublicKey(
-      "21RmtVK9HNHnd3bsa61JiQgtXZReD1c3AQuf5XHG6f1k"
-    );
-    // Get the token account of the toWallet address, and if it does not exist, create it
+    const tokenPublicKey = new PublicKey(TOKEN_ACCOUNT_ADDRESS);
+
     const toTokenAccount = await getOrCreateAssociatedTokenAccount(
       connection,
       fromWallet,
       mint,
-      toWallet
+      toPublicKey
     );
     console.log(`toTokenAccount ${toTokenAccount.address}`);
 
     const signature = await transfer(
       connection,
       fromWallet,
-      fromTokenAccountAddress,
+      tokenPublicKey,
       toTokenAccount.address,
       fromWallet.publicKey,
       100000000
     );
     console.log(`finished transfer with ${signature}`);
+    setLoading(false);
+    toast.success("Received token to your wallet");
   }
   return (
     <button css={styles.walletButton} onClick={receiveFreeToken}>

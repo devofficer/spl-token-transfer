@@ -1,18 +1,13 @@
-/* Example with @emotion/react */
-import Link from "next/link";
-import xw, { cx } from "xwind";
-import MetaMask from "../connect/wallet/MetaMask";
-import WalletConnect from "../connect/wallet/WalletConnect";
+import xw from "xwind";
 import ReceiveToken from "./ReceiveToken";
 import SendToken from "./SendToken";
-import {
-  useConnection,
-  useWallet,
-  useAnchorWallet,
-} from "@solana/wallet-adapter-react";
+
+import { useState } from "react";
+import Overlay from "../overlay";
+import toast, { Toaster } from "react-hot-toast";
 //"react native style"
 const styles = {
-  connectWallet: xw`
+  tokenTransfer: xw`
     flex flex-col items-center
     w-11/12 sm:w-10/12 md:w-8/12 lg:w-5/12 h-3/5
     rounded-t-lg lg:rounded-t-none lg:rounded-l-lg
@@ -47,26 +42,38 @@ const styles = {
 };
 
 const TokenTransfer = ({ className, children, ...props }) => {
-  const wallet = useAnchorWallet();
-  const { connection } = useConnection();
+  const [isLoading, setLoading] = useState(false);
 
   return (
-    <div css={styles.connectWallet}>
+    <div css={styles.tokenTransfer}>
+      {isLoading && <Overlay />}
       <h2 css={styles.title}>Transfer new spl-token</h2>
       <p css={styles.description}>
         You can receive 100 new spl-token to your wallet
       </p>
       <div css={styles.buttonWrapper}>
-        <ReceiveToken />
+        <ReceiveToken setLoading={setLoading} toast={toast} />
       </div>
       <p css={styles.description}>You can send token to other address</p>
       <div css={styles.buttonWrapper}>
-        <SendToken />
+        <SendToken setLoading={setLoading} toast={toast} />
       </div>
 
       <div css={styles.termsWrapper}>
         Please make sure that you are on a devnet.
       </div>
+
+      <Toaster
+        position="top-right"
+        duration="4000"
+        toastOptions={{
+          style: {
+            fontSize: "12px",
+            padding: "16px",
+            color: "#713200",
+          },
+        }}
+      />
     </div>
   );
 };

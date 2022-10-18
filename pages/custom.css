@@ -20,3 +20,10 @@
 .slider-control-bottomcenter li {
   margin-right: 5px;
 }
+
+nav button.wallet-adapter-button {
+  background-color: #1b369a;
+  padding: 0.5em 2em !important;
+  font-size: 0.875em;
+  border-radius: 9999px;
+}
